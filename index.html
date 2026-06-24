@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trello Clone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <button class="header-btn" id="home-btn" title="Home">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </button>
+      <div class="header-divider"></div>
+      <span class="board-name" id="board-name" contenteditable="true" title="Click to rename board">My Workspace</span>
+    </div>
+    <div class="header-center">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="white" width="28" height="28"><rect x="2" y="2" width="9" height="15" rx="2"/><rect x="13" y="2" width="9" height="10" rx="2"/></svg>
+      <span class="logo-text">Trello</span>
+    </div>
+    <div class="header-right">
+      <button class="avatar-btn" title="Account">
+        <span>T</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="board-bar">
+    <div class="board-bar-left">
+      <button class="board-btn active" id="current-board-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="9" height="15" rx="2"/><rect x="13" y="2" width="9" height="10" rx="2"/></svg>
+        <span id="board-bar-name">My Board</span>
+      </button>
+    </div>
+    <div class="board-bar-right">
+      <button class="board-action-btn" id="filter-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+        Filters
+      </button>
+    </div>
+  </div>
+
+  <main class="board" id="board">
+    <div class="add-list-container" id="add-list-container">
+      <button class="add-list-btn" id="add-list-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-1 10h-4v4h-2v-4H8v-2h4V7h2v4h4v2z"/></svg>
+        Add another list
+      </button>
+      <div class="add-list-form hidden" id="add-list-form">
+        <input type="text" class="list-name-input" id="add-list-input" placeholder="Enter list title…" maxlength="256" />
+        <div class="form-controls">
+          <button class="btn-primary" id="save-list-btn">Add list</button>
+          <button class="btn-icon-cancel" id="cancel-list-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Card Detail Modal -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="card-modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <svg class="modal-card-icon" width="24" height="24" viewBox="0 0 24 24" fill="#6b778c"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <div class="modal-title-wrap">
+          <div class="modal-title" id="modal-title" contenteditable="true" spellcheck="false"></div>
+          <div class="modal-list-label">in list <span id="modal-list-name" class="modal-list-link"></span></div>
+        </div>
+        <button class="modal-close-btn" id="modal-close" title="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-main">
+          <div class="modal-section">
+            <div class="section-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#6b778c"><path d="M3 18h12v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+              <h3>Description</h3>
+              <button class="edit-desc-btn hidden" id="edit-desc-btn">Edit</button>
+            </div>
+            <div class="desc-display" id="desc-display">
+              <p id="desc-text" class="desc-placeholder">Add a more detailed description…</p>
+            </div>
+            <div class="desc-editor hidden" id="desc-editor">
+              <textarea id="modal-description" placeholder="Add a more detailed description…"></textarea>
+              <div class="form-controls">
+                <button class="btn-primary" id="save-desc-btn">Save</button>
+                <button class="btn-text" id="cancel-desc-btn">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-sidebar">
+          <div class="sidebar-section">
+            <p class="sidebar-label">Actions</p>
+            <button class="sidebar-btn" id="delete-card-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
